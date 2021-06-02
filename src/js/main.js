@@ -1,6 +1,7 @@
 import './slider';
 import modal from './blocks/modal';
 import tabs from './blocks/tabs';
+import form from './blocks/form';
 
 window.addEventListener('DOMContentLoaded', () => {
     modal();
@@ -18,4 +19,5 @@ window.addEventListener('DOMContentLoaded', () => {
         activeClass: 'after_click', 
         linkSelector: false
     });
+    form();
 });
