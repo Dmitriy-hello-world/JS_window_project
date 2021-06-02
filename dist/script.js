@@ -17908,40 +17908,49 @@ __webpack_require__.r(__webpack_exports__);
 
 var modal = function modal() {
   function bindModal(modalTriggerSelector, modalSelector, closeCroseSelector) {
+    var notCalc = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     var triggers = document.querySelectorAll(modalTriggerSelector),
         modal = document.querySelector(modalSelector),
-        crose = document.querySelector(closeCroseSelector);
+        crose = document.querySelector(closeCroseSelector),
+        popups = document.querySelectorAll('[data-popup]');
     triggers.forEach(function (item) {
       item.addEventListener('click', function (e) {
         if (e.target) {
           e.preventDefault();
+          popups.forEach(function (item) {
+            item.style.display = 'none';
+          });
           modal.style.display = 'block';
           document.body.style.overflow = 'hidden';
+          clearTimeout(timer);
         }
       });
     });
     crose.addEventListener('click', function () {
-      modal.style.display = 'none';
+      popups.forEach(function (item) {
+        item.style.display = 'none';
+      });
       document.body.style.overflow = '';
     });
     modal.addEventListener('click', function (e) {
-      if (e.target == modal) {
-        modal.style.display = 'none';
+      if (e.target == modal && notCalc) {
+        popups.forEach(function (item) {
+          item.style.display = 'none';
+        });
         document.body.style.overflow = '';
       }
     });
   }
 
-  function showModalInTime() {
-    setTimeout(function () {
-      document.querySelector('.popup').style.display = 'block';
-      document.body.style.overflow = 'hidden';
-    }, 1000 * 60);
-  }
-
   bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close');
   bindModal('.phone_link', '.popup', '.popup .popup_close');
-  showModalInTime();
+  bindModal('.glazing_price_btn', '.popup_calc', '.popup_calc_close');
+  bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false);
+  bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false);
+  var timer = setTimeout(function () {
+    document.querySelector('.popup').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }, 1000 * 60);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modal);
@@ -17969,7 +17978,8 @@ var tabs = function tabs(_ref) {
       contentsSelector = _ref.contentsSelector,
       headerSelector = _ref.headerSelector,
       activeClass = _ref.activeClass,
-      linkSelector = _ref.linkSelector;
+      linkSelector = _ref.linkSelector,
+      display = _ref.display;
   var tabs = document.querySelectorAll(tabsSelector),
       contents = document.querySelectorAll(contentsSelector),
       header = document.querySelector(headerSelector),
@@ -17993,7 +18003,7 @@ var tabs = function tabs(_ref) {
 
   function showTab() {
     var i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    contents[i].style.display = 'block';
+    contents[i].style.display = display;
 
     if (links.length > 0) {
       links[i].classList.add(activeClass);
@@ -18042,6 +18052,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('DOMContentLoaded', function () {
   Object(_blocks_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_blocks_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    display: 'block',
     tabsSelector: '.glazing_block',
     contentsSelector: '.glazing_content',
     headerSelector: '.glazing_slider',
@@ -18049,10 +18060,19 @@ window.addEventListener('DOMContentLoaded', function () {
     linkSelector: '.glazing_block a'
   });
   Object(_blocks_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    display: 'block',
     tabsSelector: '.no_click',
     contentsSelector: '.decoration_content > div > div',
     headerSelector: '.decoration_slider',
     activeClass: 'after_click',
+    linkSelector: false
+  });
+  Object(_blocks_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    display: 'inline',
+    tabsSelector: '.balcon_icons_img',
+    contentsSelector: '.big_img > img',
+    headerSelector: '.balcon_icons',
+    activeClass: 'do_image_more',
     linkSelector: false
   });
   Object(_blocks_form__WEBPACK_IMPORTED_MODULE_3__["default"])();
