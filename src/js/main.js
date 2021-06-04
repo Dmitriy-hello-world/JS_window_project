@@ -2,8 +2,16 @@ import './slider';
 import modal from './blocks/modal';
 import tabs from './blocks/tabs';
 import form from './blocks/form';
+import modalState from './blocks/modalState';
 
 window.addEventListener('DOMContentLoaded', () => {
+
+    let state = {
+        form: 0,
+        type: 'tree'
+    }; 
+
+    modalState(state);
     modal();
     tabs({
         display: 'block',
@@ -29,5 +37,5 @@ window.addEventListener('DOMContentLoaded', () => {
         activeClass: 'do_image_more', 
         linkSelector: false
     });
-    form();
+    form(state);
 });

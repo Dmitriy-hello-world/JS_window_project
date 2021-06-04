@@ -1,7 +1,8 @@
-const forms = () => {
+import inputValidNum from './inputValidNum';
+
+const forms = (state) => {
     const forms = document.querySelectorAll('form'),
           inputs = document.querySelectorAll('input'),
-          numberInputs = document.querySelectorAll('input[name="user_phone"]'),
           message = {
               loading: 'Отправка..',
               succes: 'Все готово, ваши данные отправлены!',
@@ -20,11 +21,9 @@ const forms = () => {
         return await result.text();  
     }; 
     
-    numberInputs.forEach(item => {
-        item.addEventListener('input', () => {
-            item.value = item.value.replace(/\D/, '');
-        });
-    });
+    inputValidNum('input[name="user_phone"]');
+
+    let isState = false;
 
     forms.forEach( item => {
         item.addEventListener('submit', e => {
@@ -35,7 +34,14 @@ const forms = () => {
             messageBlock.classList.add('status');
             item.appendChild(messageBlock);
 
-            const formData = new FormData(item);
+            let formData = new FormData(item);
+
+            if(item.getAttribute('data-calc') == 'end') {
+                isState = true;
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
+            }
 
             postData('assets/server.php', formData)
             .then(res => {
@@ -49,10 +55,24 @@ const forms = () => {
                     item.value = '';
                 });
 
+                if (isState) {
+                    document.querySelector('#height').value = '';
+                    document.querySelector('#width').value = '';
+                    document.querySelectorAll('.checkbox').forEach( item => {
+                        item.checked = false;
+                    });
+
+                    setTimeout(() => {
+                        document.querySelector('.popup_calc_end').style.display = 'none';
+                        document.body.style.overflow = '';
+                    }, 2000);
+                }
+
                 setTimeout(() => {messageBlock.remove();},4000);
+                console.log(state);
             });
         });
-    });      
+    });    
 };
 
 export default forms;
