@@ -3,6 +3,7 @@ import modal from './blocks/modal';
 import tabs from './blocks/tabs';
 import form from './blocks/form';
 import modalState from './blocks/modalState';
+import timer from './blocks/timer';
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -10,6 +11,8 @@ window.addEventListener('DOMContentLoaded', () => {
         form: 0,
         type: 'tree'
     }; 
+
+    const deadline = '2021-06-06';
 
     modalState(state);
     modal();
@@ -38,4 +41,5 @@ window.addEventListener('DOMContentLoaded', () => {
         linkSelector: false
     });
     form(state);
+    timer('#timer', deadline);
 });

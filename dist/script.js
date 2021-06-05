@@ -18178,6 +18178,72 @@ var tabs = function tabs(_ref) {
 
 /***/ }),
 
+/***/ "./src/js/blocks/timer.js":
+/*!********************************!*\
+  !*** ./src/js/blocks/timer.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var timer = function timer(id, deadline) {
+  var getZero = function getZero(num) {
+    if (num <= 9) {
+      return '0' + num;
+    } else {
+      return num;
+    }
+  };
+
+  var getTime = function getTime(endTime) {
+    var t = Date.parse(endTime) - Date.parse(new Date()),
+        seconds = Math.floor(t / 1000 % 60),
+        minutes = Math.floor(t / 1000 / 60 % 60),
+        hours = Math.floor(t / (1000 * 60 * 60) % 24),
+        days = Math.floor(t / (1000 * 60 * 60 * 24));
+    return {
+      t: t,
+      seconds: seconds,
+      minutes: minutes,
+      hours: hours,
+      days: days
+    };
+  };
+
+  var setClock = function setClock(selector, endTime) {
+    var timer = document.querySelector(selector),
+        seconds = timer.querySelector('#seconds'),
+        minutes = timer.querySelector('#minutes'),
+        hours = timer.querySelector('#hours'),
+        days = timer.querySelector('#days'),
+        timerInterval = setInterval(updateClock, 1000);
+    updateClock();
+
+    function updateClock() {
+      var totalTime = getTime(endTime);
+      seconds.textContent = getZero(totalTime.seconds);
+      minutes.textContent = getZero(totalTime.minutes);
+      hours.textContent = getZero(totalTime.hours);
+      days.textContent = getZero(totalTime.days);
+
+      if (endTime <= 0) {
+        seconds.textContent = '00';
+        minutes.textContent = '00';
+        hours.textContent = '00';
+        days.textContent = '00';
+        clearInterval(timerInterval);
+      }
+    }
+  };
+
+  setClock(id, deadline);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (timer);
+
+/***/ }),
+
 /***/ "./src/js/main.js":
 /*!************************!*\
   !*** ./src/js/main.js ***!
@@ -18192,6 +18258,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/tabs */ "./src/js/blocks/tabs.js");
 /* harmony import */ var _blocks_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/form */ "./src/js/blocks/form.js");
 /* harmony import */ var _blocks_modalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/modalState */ "./src/js/blocks/modalState.js");
+/* harmony import */ var _blocks_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/timer */ "./src/js/blocks/timer.js");
+
 
 
 
@@ -18202,6 +18270,7 @@ window.addEventListener('DOMContentLoaded', function () {
     form: 0,
     type: 'tree'
   };
+  var deadline = '2021-06-06';
   Object(_blocks_modalState__WEBPACK_IMPORTED_MODULE_4__["default"])(state);
   Object(_blocks_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_blocks_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])({
@@ -18229,6 +18298,7 @@ window.addEventListener('DOMContentLoaded', function () {
     linkSelector: false
   });
   Object(_blocks_form__WEBPACK_IMPORTED_MODULE_3__["default"])(state);
+  Object(_blocks_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('#timer', deadline);
 });
 
 /***/ }),
