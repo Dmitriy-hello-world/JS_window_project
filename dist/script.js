@@ -17911,6 +17911,48 @@ var forms = function forms(state) {
 
 /***/ }),
 
+/***/ "./src/js/blocks/images.js":
+/*!*********************************!*\
+  !*** ./src/js/blocks/images.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var images = function images() {
+  var wrapper = document.querySelector('.works'),
+      popupDiv = document.createElement('div'),
+      popupImg = document.createElement('img');
+  popupDiv.classList.add('popup_img');
+  wrapper.appendChild(popupDiv);
+  popupDiv.style.justifyContent = 'center';
+  popupDiv.style.alignItems = 'center';
+  popupDiv.style.display = 'none';
+  popupImg.style.maxWidth = '90%';
+  popupDiv.appendChild(popupImg);
+  wrapper.addEventListener('click', function (e) {
+    e.preventDefault();
+    var target = e.target;
+
+    if (target && target.classList.contains('preview')) {
+      popupDiv.style.display = 'flex';
+      var link = target.parentNode.getAttribute('href');
+      popupImg.setAttribute('src', link);
+      document.body.style.overflow = 'hidden';
+    }
+
+    if (target && target.matches('div.popup_img')) {
+      popupDiv.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (images);
+
+/***/ }),
+
 /***/ "./src/js/blocks/inputValidNum.js":
 /*!****************************************!*\
   !*** ./src/js/blocks/inputValidNum.js ***!
@@ -18259,6 +18301,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/form */ "./src/js/blocks/form.js");
 /* harmony import */ var _blocks_modalState__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/modalState */ "./src/js/blocks/modalState.js");
 /* harmony import */ var _blocks_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/timer */ "./src/js/blocks/timer.js");
+/* harmony import */ var _blocks_images__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/images */ "./src/js/blocks/images.js");
+
 
 
 
@@ -18299,6 +18343,7 @@ window.addEventListener('DOMContentLoaded', function () {
   });
   Object(_blocks_form__WEBPACK_IMPORTED_MODULE_3__["default"])(state);
   Object(_blocks_timer__WEBPACK_IMPORTED_MODULE_5__["default"])('#timer', deadline);
+  Object(_blocks_images__WEBPACK_IMPORTED_MODULE_6__["default"])();
 });
 
 /***/ }),

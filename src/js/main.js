@@ -4,6 +4,7 @@ import tabs from './blocks/tabs';
 import form from './blocks/form';
 import modalState from './blocks/modalState';
 import timer from './blocks/timer';
+import images from './blocks/images';
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -42,4 +43,5 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     form(state);
     timer('#timer', deadline);
+    images();
 });
