@@ -1,7 +1,11 @@
+import getScrollSize from './scroll';
+
 const images = () => {
     const wrapper = document.querySelector('.works'),
           popupDiv = document.createElement('div'),
-          popupImg = document.createElement('img');
+          popupImg = document.createElement('img'),
+          scroll = getScrollSize();
+
 
     popupDiv.classList.add('popup_img');
     wrapper.appendChild(popupDiv);
@@ -23,11 +27,13 @@ const images = () => {
             const link = target.parentNode.getAttribute('href');
             popupImg.setAttribute('src', link); 
             document.body.style.overflow = 'hidden';
+            document.body.style.marginRight = `${scroll}px`;
         }
 
         if (target && target.matches('div.popup_img')) {
             popupDiv.style.display = 'none';
             document.body.style.overflow = '';
+            document.body.style.marginRight = `0`;
         }
     });
 };

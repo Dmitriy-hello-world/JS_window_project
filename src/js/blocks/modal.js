@@ -1,10 +1,13 @@
+import getScrollSize from './scroll';
+
 const modal = () => {
 
     function bindModal(modalTriggerSelector,modalSelector, closeCroseSelector, notCalc = true, check = false) {
         const triggers = document.querySelectorAll(modalTriggerSelector),
               modal = document.querySelector(modalSelector),
               crose = document.querySelector(closeCroseSelector),
-              popups = document.querySelectorAll('[data-popup]');
+              popups = document.querySelectorAll('[data-popup]'),
+              scroll = getScrollSize();
 
         function showModal(e) {
             if (e.target) {
@@ -17,6 +20,7 @@ const modal = () => {
 
                 modal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
+                document.body.style.marginRight = `${scroll}px`;
 
                 clearTimeout(timer);
             }
@@ -58,6 +62,7 @@ const modal = () => {
                 item.style.display = 'none';
             });
             document.body.style.overflow = '';
+            document.body.style.marginRight = '0';
 
         });
 
@@ -67,6 +72,7 @@ const modal = () => {
                     item.style.display = 'none';
                 });
                 document.body.style.overflow = '';
+                document.body.style.marginRight = '0';
             }
         });
     }
